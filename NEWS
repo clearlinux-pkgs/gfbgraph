@@ -1,3 +1,44 @@
+=================
+LibGFBGraph 0.2.3
+=================
+
+The major update in this version is the support fo the version 2.3 of
+the Facebook Graph API.
+
+The changes include:
+
+- The tests has been improved to use the Facebook test API
+  (creating a test user).
+- A node now can be linked to other (if allowed). This allow to
+  publish data to Facebook! For the moment just albums and photos.
+- Bug #752380 Updated the API of Facebook Graph to version 2.3 due
+  deprecation of 1.0.
+- The documentation has been polished and now respect parallel
+  installations.
+
+=================
+LibGFBGraph 0.2.2
+=================
+
+Now with development documentation thanks to gtk-doc!
+
+Also the node base class includes the modification date.
+
+=================
+LibGFBGraph 0.2.1
+=================
+
+This release is centered in a better control of the photos given by the
+Facebook Graph API in order a better integration in GNOME Photos.
+
+Now it's possible to:
+
+- Get all the available sizes of a given photo.
+- Get the higher resolution image available of a photo.
+- Get the available image with a width or height nearest a given number..
+
+Also, the introspection annotations has been enhanced.
+
 ===============
 LibGFBGraph 0.2
 ===============
