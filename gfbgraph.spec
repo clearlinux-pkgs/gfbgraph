@@ -4,7 +4,7 @@
 #
 Name     : gfbgraph
 Version  : 0.2.3
-Release  : 2
+Release  : 3
 URL      : https://download.gnome.org/sources/gfbgraph/0.2/gfbgraph-0.2.3.tar.xz
 Source0  : https://download.gnome.org/sources/gfbgraph/0.2/gfbgraph-0.2.3.tar.xz
 Summary  : GObject library for Facebook Graph API
