@@ -4,17 +4,17 @@
 #
 Name     : gfbgraph
 Version  : 0.2.3
-Release  : 3
+Release  : 4
 URL      : https://download.gnome.org/sources/gfbgraph/0.2/gfbgraph-0.2.3.tar.xz
 Source0  : https://download.gnome.org/sources/gfbgraph/0.2/gfbgraph-0.2.3.tar.xz
-Summary  : GObject library for Facebook Graph API
+Summary  : GLib/GObject wrapper for the Facebook Graph API
 Group    : Development/Tools
 License  : LGPL-2.1
-Requires: gfbgraph-lib
-Requires: gfbgraph-doc
-Requires: gfbgraph-data
+Requires: gfbgraph-data = %{version}-%{release}
+Requires: gfbgraph-lib = %{version}-%{release}
+Requires: gfbgraph-license = %{version}-%{release}
+BuildRequires : buildreq-gnome
 BuildRequires : docbook-xml
-BuildRequires : gobject-introspection-dev
 BuildRequires : gtk-doc
 BuildRequires : gtk-doc-dev
 BuildRequires : libxslt-bin
@@ -45,9 +45,10 @@ data components for the gfbgraph package.
 %package dev
 Summary: dev components for the gfbgraph package.
 Group: Development
-Requires: gfbgraph-lib
-Requires: gfbgraph-data
-Provides: gfbgraph-devel
+Requires: gfbgraph-lib = %{version}-%{release}
+Requires: gfbgraph-data = %{version}-%{release}
+Provides: gfbgraph-devel = %{version}-%{release}
+Requires: gfbgraph = %{version}-%{release}
 
 %description dev
 dev components for the gfbgraph package.
@@ -64,10 +65,19 @@ doc components for the gfbgraph package.
 %package lib
 Summary: lib components for the gfbgraph package.
 Group: Libraries
-Requires: gfbgraph-data
+Requires: gfbgraph-data = %{version}-%{release}
+Requires: gfbgraph-license = %{version}-%{release}
 
 %description lib
 lib components for the gfbgraph package.
+
+
+%package license
+Summary: license components for the gfbgraph package.
+Group: Default
+
+%description license
+license components for the gfbgraph package.
 
 
 %prep
@@ -78,7 +88,14 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1518629220
+export SOURCE_DATE_EPOCH=1556999511
+export AR=gcc-ar
+export RANLIB=gcc-ranlib
+export NM=gcc-nm
+export CFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 "
+export FCFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 "
+export FFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 "
+export CXXFLAGS="$CXXFLAGS -O3 -ffat-lto-objects -flto=4 "
 %configure --disable-static
 make  %{?_smp_mflags}
 
@@ -90,8 +107,10 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 make VERBOSE=1 V=1 %{?_smp_mflags} check || :
 
 %install
-export SOURCE_DATE_EPOCH=1518629220
+export SOURCE_DATE_EPOCH=1556999511
 rm -rf %{buildroot}
+mkdir -p %{buildroot}/usr/share/package-licenses/gfbgraph
+cp COPYING %{buildroot}/usr/share/package-licenses/gfbgraph/COPYING
 %make_install
 
 %files
@@ -124,7 +143,7 @@ rm -rf %{buildroot}
 /usr/lib64/pkgconfig/libgfbgraph-0.2.pc
 
 %files doc
-%defattr(-,root,root,-)
+%defattr(0644,root,root,0755)
 /usr/share/gtk-doc/html/gfbgraph-0.2/GFBGraphAlbum.html
 /usr/share/gtk-doc/html/gfbgraph-0.2/GFBGraphGoaAuthorizer.html
 /usr/share/gtk-doc/html/gfbgraph-0.2/GFBGraphNode.html
@@ -157,3 +176,7 @@ rm -rf %{buildroot}
 %defattr(-,root,root,-)
 /usr/lib64/libgfbgraph-0.2.so.0
 /usr/lib64/libgfbgraph-0.2.so.0.0.0
+
+%files license
+%defattr(0644,root,root,0755)
+/usr/share/package-licenses/gfbgraph/COPYING
