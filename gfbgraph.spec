@@ -4,10 +4,10 @@
 #
 Name     : gfbgraph
 Version  : 0.2.3
-Release  : 5
+Release  : 6
 URL      : https://download.gnome.org/sources/gfbgraph/0.2/gfbgraph-0.2.3.tar.xz
 Source0  : https://download.gnome.org/sources/gfbgraph/0.2/gfbgraph-0.2.3.tar.xz
-Summary  : GLib/GObject wrapper for the Facebook Graph API
+Summary  : GObject library for Facebook Graph API
 Group    : Development/Tools
 License  : LGPL-2.1
 Requires: gfbgraph-data = %{version}-%{release}
@@ -82,35 +82,37 @@ license components for the gfbgraph package.
 
 %prep
 %setup -q -n gfbgraph-0.2.3
+cd %{_builddir}/gfbgraph-0.2.3
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
-export LANG=C
-export SOURCE_DATE_EPOCH=1556999511
+export LANG=C.UTF-8
+export SOURCE_DATE_EPOCH=1586225365
+export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
 export CFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 "
-export FCFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 "
-export FFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 "
+export FCFLAGS="$FFLAGS -O3 -ffat-lto-objects -flto=4 "
+export FFLAGS="$FFLAGS -O3 -ffat-lto-objects -flto=4 "
 export CXXFLAGS="$CXXFLAGS -O3 -ffat-lto-objects -flto=4 "
 %configure --disable-static
 make  %{?_smp_mflags}
 
 %check
-export LANG=C
+export LANG=C.UTF-8
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 make VERBOSE=1 V=1 %{?_smp_mflags} check || :
 
 %install
-export SOURCE_DATE_EPOCH=1556999511
+export SOURCE_DATE_EPOCH=1586225365
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/gfbgraph
-cp COPYING %{buildroot}/usr/share/package-licenses/gfbgraph/COPYING
+cp %{_builddir}/gfbgraph-0.2.3/COPYING %{buildroot}/usr/share/package-licenses/gfbgraph/70e5b527a568a6a75b977976e2d392fadf9bd84a
 %make_install
 
 %files
@@ -179,4 +181,4 @@ cp COPYING %{buildroot}/usr/share/package-licenses/gfbgraph/COPYING
 
 %files license
 %defattr(0644,root,root,0755)
-/usr/share/package-licenses/gfbgraph/COPYING
+/usr/share/package-licenses/gfbgraph/70e5b527a568a6a75b977976e2d392fadf9bd84a
