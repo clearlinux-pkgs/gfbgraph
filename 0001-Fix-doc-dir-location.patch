@@ -1,0 +1,23 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Patrick McCarty <patrick.mccarty@intel.com>
+Date: Mon, 12 Sep 2022 19:45:44 +0000
+Subject: [PATCH] Fix doc dir location
+
+Signed-off-by: Patrick McCarty <patrick.mccarty@intel.com>
+---
+ Makefile.am | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/Makefile.am b/Makefile.am
+index 056d414..97ccf38 100644
+--- a/Makefile.am
++++ b/Makefile.am
+@@ -1,7 +1,7 @@
+ SUBDIRS = gfbgraph docs tests
+ ACLOCAL_AMFLAGS = -I m4
+ 
+-libgfbgraphdocdir = ${prefix}/doc/libgfbgraph
++libgfbgraphdocdir = ${prefix}/share/doc/libgfbgraph
+ libgfbgraphdoc_DATA = \
+ 	README\
+ 	COPYING\

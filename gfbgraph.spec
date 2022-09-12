@@ -4,7 +4,7 @@
 #
 Name     : gfbgraph
 Version  : 0.2.5
-Release  : 9
+Release  : 10
 URL      : https://download.gnome.org/sources/gfbgraph/0.2/gfbgraph-0.2.5.tar.xz
 Source0  : https://download.gnome.org/sources/gfbgraph/0.2/gfbgraph-0.2.5.tar.xz
 Summary  : GObject library for Facebook Graph API
@@ -13,11 +13,18 @@ License  : LGPL-2.1
 Requires: gfbgraph-data = %{version}-%{release}
 Requires: gfbgraph-lib = %{version}-%{release}
 Requires: gfbgraph-license = %{version}-%{release}
+BuildRequires : automake
+BuildRequires : automake-dev
 BuildRequires : buildreq-gnome
 BuildRequires : docbook-xml
+BuildRequires : gettext-bin
 BuildRequires : gtk-doc
 BuildRequires : gtk-doc-dev
+BuildRequires : libtool
+BuildRequires : libtool-dev
 BuildRequires : libxslt-bin
+BuildRequires : m4
+BuildRequires : pkg-config-dev
 BuildRequires : pkgconfig(gio-2.0)
 BuildRequires : pkgconfig(glib-2.0)
 BuildRequires : pkgconfig(goa-1.0)
@@ -25,6 +32,7 @@ BuildRequires : pkgconfig(gobject-2.0)
 BuildRequires : pkgconfig(json-glib-1.0)
 BuildRequires : pkgconfig(libsoup-2.4)
 BuildRequires : pkgconfig(rest-0.7)
+Patch1: 0001-Fix-doc-dir-location.patch
 
 %description
 LibGFBGraph
@@ -83,13 +91,14 @@ license components for the gfbgraph package.
 %prep
 %setup -q -n gfbgraph-0.2.5
 cd %{_builddir}/gfbgraph-0.2.5
+%patch1 -p1
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1635622720
+export SOURCE_DATE_EPOCH=1663012128
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -98,7 +107,7 @@ export CFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=auto "
 export FCFLAGS="$FFLAGS -O3 -ffat-lto-objects -flto=auto "
 export FFLAGS="$FFLAGS -O3 -ffat-lto-objects -flto=auto "
 export CXXFLAGS="$CXXFLAGS -O3 -ffat-lto-objects -flto=auto "
-%configure --disable-static
+%reconfigure --disable-static
 make  %{?_smp_mflags}
 
 %check
@@ -109,20 +118,14 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 make %{?_smp_mflags} check || :
 
 %install
-export SOURCE_DATE_EPOCH=1635622720
+export SOURCE_DATE_EPOCH=1663012128
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/gfbgraph
-cp %{_builddir}/gfbgraph-0.2.5/COPYING %{buildroot}/usr/share/package-licenses/gfbgraph/70e5b527a568a6a75b977976e2d392fadf9bd84a
+cp %{_builddir}/gfbgraph-%{version}/COPYING %{buildroot}/usr/share/package-licenses/gfbgraph/70e5b527a568a6a75b977976e2d392fadf9bd84a
 %make_install
 
 %files
 %defattr(-,root,root,-)
-/usr/doc/libgfbgraph/AUTHORS
-/usr/doc/libgfbgraph/COPYING
-/usr/doc/libgfbgraph/ChangeLog
-/usr/doc/libgfbgraph/INSTALL
-/usr/doc/libgfbgraph/NEWS
-/usr/doc/libgfbgraph/README
 
 %files data
 %defattr(-,root,root,-)
@@ -146,6 +149,12 @@ cp %{_builddir}/gfbgraph-0.2.5/COPYING %{buildroot}/usr/share/package-licenses/g
 
 %files doc
 %defattr(0644,root,root,0755)
+/usr/share/doc/libgfbgraph/AUTHORS
+/usr/share/doc/libgfbgraph/COPYING
+/usr/share/doc/libgfbgraph/ChangeLog
+/usr/share/doc/libgfbgraph/INSTALL
+/usr/share/doc/libgfbgraph/NEWS
+/usr/share/doc/libgfbgraph/README
 /usr/share/gtk-doc/html/gfbgraph-0.2/GFBGraphAlbum.html
 /usr/share/gtk-doc/html/gfbgraph-0.2/GFBGraphGoaAuthorizer.html
 /usr/share/gtk-doc/html/gfbgraph-0.2/GFBGraphNode.html
