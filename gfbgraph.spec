@@ -4,7 +4,7 @@
 #
 Name     : gfbgraph
 Version  : 0.2.5
-Release  : 12
+Release  : 13
 URL      : https://download.gnome.org/sources/gfbgraph/0.2/gfbgraph-0.2.5.tar.xz
 Source0  : https://download.gnome.org/sources/gfbgraph/0.2/gfbgraph-0.2.5.tar.xz
 Summary  : GObject library for Facebook Graph API
@@ -98,7 +98,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1663012128
+export SOURCE_DATE_EPOCH=1664145310
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -118,10 +118,10 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 make %{?_smp_mflags} check || :
 
 %install
-export SOURCE_DATE_EPOCH=1663012128
+export SOURCE_DATE_EPOCH=1664145310
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/gfbgraph
-cp %{_builddir}/gfbgraph-%{version}/COPYING %{buildroot}/usr/share/package-licenses/gfbgraph/70e5b527a568a6a75b977976e2d392fadf9bd84a
+cp %{_builddir}/gfbgraph-%{version}/COPYING %{buildroot}/usr/share/package-licenses/gfbgraph/70e5b527a568a6a75b977976e2d392fadf9bd84a || :
 %make_install
 
 %files
