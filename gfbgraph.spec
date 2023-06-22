@@ -5,7 +5,7 @@
 #
 Name     : gfbgraph
 Version  : 0.2.5
-Release  : 14
+Release  : 15
 URL      : https://download.gnome.org/sources/gfbgraph/0.2/gfbgraph-0.2.5.tar.xz
 Source0  : https://download.gnome.org/sources/gfbgraph/0.2/gfbgraph-0.2.5.tar.xz
 Summary  : GObject library for Facebook Graph API
@@ -89,22 +89,22 @@ license components for the gfbgraph package.
 %prep
 %setup -q -n gfbgraph-0.2.5
 cd %{_builddir}/gfbgraph-0.2.5
-%patch1 -p1
+%patch -P 1 -p1
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1680024769
+export SOURCE_DATE_EPOCH=1687472731
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
-export CFLAGS="$CFLAGS -O3 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -g1 -gno-column-info -gno-variable-location-views -gz "
-export FCFLAGS="$FFLAGS -O3 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -g1 -gno-column-info -gno-variable-location-views -gz "
-export FFLAGS="$FFLAGS -O3 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -g1 -gno-column-info -gno-variable-location-views -gz "
-export CXXFLAGS="$CXXFLAGS -O3 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -g1 -gno-column-info -gno-variable-location-views -gz "
+export CFLAGS="$CFLAGS -O3 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -g1 -gno-column-info -gno-variable-location-views -gz=zstd "
+export FCFLAGS="$FFLAGS -O3 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -g1 -gno-column-info -gno-variable-location-views -gz=zstd "
+export FFLAGS="$FFLAGS -O3 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -g1 -gno-column-info -gno-variable-location-views -gz=zstd "
+export CXXFLAGS="$CXXFLAGS -O3 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -g1 -gno-column-info -gno-variable-location-views -gz=zstd "
 %reconfigure --disable-static
 make  %{?_smp_mflags}
 
@@ -116,7 +116,7 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 make %{?_smp_mflags} check || :
 
 %install
-export SOURCE_DATE_EPOCH=1680024769
+export SOURCE_DATE_EPOCH=1687472731
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/gfbgraph
 cp %{_builddir}/gfbgraph-%{version}/COPYING %{buildroot}/usr/share/package-licenses/gfbgraph/70e5b527a568a6a75b977976e2d392fadf9bd84a || :
